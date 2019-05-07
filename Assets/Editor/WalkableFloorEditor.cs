@@ -80,10 +80,12 @@ public class WalkableFloorEditor : Editor
 
             if (info.transform.parent != null && info.transform.parent.gameObject.tag == "Waypoint")
             {
-                // Select that waypoint
-                Selection.activeObject = info.transform.parent.gameObject;
                 // Cheat!
                 StoreTool();
+                GUIUtility.hotControl = GUIUtility.GetControlID(FocusType.Passive);
+
+                // Select that waypoint
+                Selection.activeObject = info.transform.parent.gameObject;
                 return true;
             }
 

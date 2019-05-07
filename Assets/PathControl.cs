@@ -29,7 +29,7 @@ public class PathControl : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         DrawPathGizmos();
     }
@@ -52,6 +52,19 @@ public class PathControl : MonoBehaviour
         {
             Vector3 start = waypoints[i].position;
             Vector3 end = waypoints[(i + 1) < waypoints.Count ? i + 1 : 0].position;
+
+            // Detect if there's anything in the way
+            RaycastHit hitInfo;
+            if (Physics.Raycast(start + Vector3.up * 0.2f, end - start, out hitInfo))
+            {
+                // Green if we hit where we expect
+                if (hitInfo.collider.transform.parent != null && hitInfo.collider.transform.parent.position == end)
+                    Gizmos.color = Color.green;
+                else
+                {
+                    Gizmos.color = Color.red;
+                }
+            }
 
             Gizmos.DrawLine(start, end);
         }

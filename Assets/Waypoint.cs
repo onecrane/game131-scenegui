@@ -17,7 +17,7 @@ public class Waypoint : MonoBehaviour
         
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         // Draw gizmos to all waypoints in order;
         // that means we need something that controls the order of the waypoints, yes yes?

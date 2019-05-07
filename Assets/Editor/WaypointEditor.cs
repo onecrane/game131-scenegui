@@ -38,6 +38,7 @@ public class WaypointEditor : Editor
 
     private bool HandleDrag(Event evt)
     {
+        if (evt.alt) return false;
         // Move with the mouse:
         // Find screen point of center of object:
         Vector2 currentScreen = HandleUtility.WorldToGUIPoint((target as Waypoint).transform.position);
