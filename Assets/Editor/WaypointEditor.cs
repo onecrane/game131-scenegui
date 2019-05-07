@@ -7,6 +7,7 @@ using UnityEditor;
 public class WaypointEditor : Editor
 {
 
+
     private void OnSceneGUI()
     {
         Event evt = Event.current;
@@ -23,6 +24,7 @@ public class WaypointEditor : Editor
                 if (evt.button == 0)
                 {
                     if (HandleMouseUp(evt)) evt.Use();
+                    WalkableFloorEditor.RestoreTool();
                 }
                 break;
             case EventType.MouseDown:
@@ -37,12 +39,13 @@ public class WaypointEditor : Editor
     private bool HandleDrag(Event evt)
     {
         // Move with the mouse:
-        // Move to the current mouse position if the current mouse position is on a suitable area. Borrow from previous click handler.
-        // Bear in mind that we only want to know about the walkable floor.
-        // Probably the simplest way we can implement that is with layers.
+        // Find screen point of center of object:
+        Vector2 currentScreen = HandleUtility.WorldToGUIPoint((target as Waypoint).transform.position);
+        Vector2 newScreen = currentScreen += evt.delta;
+
 
         RaycastHit info;
-        if (Physics.Raycast(HandleUtility.GUIPointToWorldRay(evt.mousePosition), out info, float.MaxValue, 1 << LayerMask.NameToLayer("WalkableFloor")))
+        if (Physics.Raycast(HandleUtility.GUIPointToWorldRay(newScreen), out info, float.MaxValue, 1 << LayerMask.NameToLayer("WalkableFloor")))
         {
             // Hit the floor; move the selected object (this) to this location
             (target as Waypoint).transform.position = info.point;
@@ -58,6 +61,28 @@ public class WaypointEditor : Editor
 
     private bool HandleMouseDown(Event evt)
     {
+        // Handle this event if we clicked on this object
+        RaycastHit info;
+        if (Physics.Raycast(HandleUtility.GUIPointToWorldRay(evt.mousePosition), out info, float.MaxValue, 1 << LayerMask.NameToLayer("EditorWaypoint")))
+        {
+            Waypoint selectedWaypoint = info.transform.parent.GetComponent<Waypoint>();
+            if (selectedWaypoint == null)
+            {
+                selectedWaypoint = info.transform.GetComponent<Waypoint>();
+            }
+
+            if (selectedWaypoint == this.target as Waypoint)
+            {
+                // Nothing
+            }
+            else
+            {
+                Selection.activeObject = selectedWaypoint.gameObject;
+            }
+            WalkableFloorEditor.StoreTool();
+            GUIUtility.hotControl = GUIUtility.GetControlID(FocusType.Passive);
+            return true;
+        }
         return false;
     }
 
