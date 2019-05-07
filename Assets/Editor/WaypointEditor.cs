@@ -30,7 +30,14 @@ public class WaypointEditor : Editor
             case EventType.MouseDown:
                 if (evt.button == 0)
                 {
-                    if (HandleMouseDown(evt)) evt.Use();
+                    if (HandleMouseDown(evt))
+                    {
+                        evt.Use();
+                    }
+                    else
+                    {
+                        WalkableFloorEditor.RestoreTool();
+                    }
                 }
                 break;
         }
