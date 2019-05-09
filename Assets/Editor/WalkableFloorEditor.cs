@@ -23,7 +23,26 @@ public class WalkableFloorEditor : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-        EditorGUILayout.LabelField("Hello");
+
+        // Enable renderers on waypoints
+        foreach (Transform waypoint in (target as PathControl).transform)
+        {
+            if (waypoint.name.StartsWith("Waypoint_"))
+            {
+                waypoint.Find("Cylinder").gameObject.SetActive(true);
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        foreach (Transform waypoint in (target as PathControl).transform)
+        {
+            if (waypoint.name.StartsWith("Waypoint_"))
+            {
+                waypoint.Find("Cylinder").gameObject.SetActive(false);
+            }
+        }
     }
 
     private void OnSceneGUI()

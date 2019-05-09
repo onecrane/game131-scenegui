@@ -7,6 +7,29 @@ using UnityEditor;
 public class WaypointEditor : Editor
 {
 
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+
+        foreach (Transform waypoint in (target as Waypoint).transform.parent)
+        {
+            if (waypoint.name.StartsWith("Waypoint_"))
+            {
+                waypoint.Find("Cylinder").gameObject.SetActive(true);
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        foreach (Transform waypoint in (target as Waypoint).transform.parent)
+        {
+            if (waypoint.name.StartsWith("Waypoint_"))
+            {
+                waypoint.Find("Cylinder").gameObject.SetActive(false);
+            }
+        }
+    }
 
     private void OnSceneGUI()
     {

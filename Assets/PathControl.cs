@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class PathControl : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private List<Vector3> waypointLocations = new List<Vector3>();
+    public List<Vector3> Waypoints { get { return waypointLocations; } }
+
     void Start()
     {
-        
+        foreach (Transform waypoint in transform)
+        {
+            if (waypoint.name.StartsWith("Waypoint_"))
+            {
+                waypointLocations.Add(waypoint.transform.position);
+                waypoint.Find("Cylinder").gameObject.SetActive(false);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -15,6 +24,7 @@ public class PathControl : MonoBehaviour
     {
         
     }
+    
 
     public void ResetWaypointNames()
     {
