@@ -20,6 +20,7 @@ public class WalkPathEditor : Editor
             GameObject newPath = PrefabUtility.InstantiatePrefab(path) as GameObject;
             newPath.transform.position = myWalkPath.transform.position;
             myWalkPath.pathToWalk = newPath.GetComponent<PathControl>();
+            EditorUtility.SetDirty(target);
 
         }
 

@@ -22,6 +22,7 @@ public class WaypointEditor : Editor
 
     private void OnDestroy()
     {
+        if (target == null) return;
         foreach (Transform waypoint in (target as Waypoint).transform.parent)
         {
             if (waypoint.name.StartsWith("Waypoint_"))

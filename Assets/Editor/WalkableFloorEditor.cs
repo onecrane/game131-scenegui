@@ -36,6 +36,7 @@ public class WalkableFloorEditor : Editor
 
     private void OnDestroy()
     {
+        if (target == null) return; // ?
         foreach (Transform waypoint in (target as PathControl).transform)
         {
             if (waypoint.name.StartsWith("Waypoint_"))
