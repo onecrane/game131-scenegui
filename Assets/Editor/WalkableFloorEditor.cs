@@ -7,6 +7,7 @@ using UnityEditor;
 public class WalkableFloorEditor : Editor
 {
     private static Tool lastTool = Tool.None;
+    private bool isHelpOpen = false;
 
     public static void StoreTool()
     {
@@ -66,6 +67,26 @@ public class WalkableFloorEditor : Editor
                 }
                 break;
         }
+        isHelpOpen = ShowHelpControls(isHelpOpen);
+    }
+
+    public static bool ShowHelpControls(bool helpOpen)
+    {
+        Handles.BeginGUI();
+        if (helpOpen)
+        {
+            if (GUI.Button(new Rect(5, 5, 20, 20), "X")) helpOpen = false;
+            List<string> helpLines = new List<string>();
+            helpLines.Add("Click a walkable surface to add a new waypoint");
+            helpLines.Add("Click-drag waypoints to move them");
+            GUI.Box(new Rect(5, 30, 400, 200), string.Join("\n", helpLines)); 
+        }
+        else
+        {
+            if (GUI.Button(new Rect(5, 5, 20, 20), "?")) helpOpen = true;
+        }
+        Handles.EndGUI();
+        return helpOpen;
     }
 
     bool HandleMouseDown(Vector2 mousePosition)

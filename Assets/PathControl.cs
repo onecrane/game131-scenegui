@@ -77,7 +77,15 @@ public class PathControl : MonoBehaviour
             }
 
             Gizmos.DrawLine(start, end);
+
+            // Draw the direction as arrows halfway along
+            Vector3 center = (start + end) / 2;
+            Vector3 startToEnd = (end - start).normalized;
+            Vector3 lineNormal = new Vector3(startToEnd.z, startToEnd.y, -startToEnd.x);    // Cheap but effective hack for 2D normal
+            Gizmos.DrawLine(center, center - startToEnd * 0.3f + lineNormal * 0.3f);    // Back and to one direction
+            Gizmos.DrawLine(center, center - startToEnd * 0.3f - lineNormal * 0.3f);    // Back and to the other direction
         }
         Gizmos.color = original;
     }
+
 }

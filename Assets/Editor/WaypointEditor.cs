@@ -6,7 +6,7 @@ using UnityEditor;
 [CustomEditor(typeof(Waypoint))]
 public class WaypointEditor : Editor
 {
-
+    private bool helpOpen = false;
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
@@ -65,6 +65,7 @@ public class WaypointEditor : Editor
                 }
                 break;
         }
+        helpOpen = WalkableFloorEditor.ShowHelpControls(helpOpen);
     }
 
     private bool HandleDrag(Event evt)
