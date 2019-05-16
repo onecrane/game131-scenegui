@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8317703781336265272}
   - component: {fileID: 8317703781336265271}
   - component: {fileID: 8317703781336265270}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: MovingAgent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,6 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathToWalk: {fileID: 0}
+  traverseBackward: 0
 --- !u!1 &8317703781568648552
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,7 +93,7 @@ GameObject:
   - component: {fileID: 8317703781568648551}
   - component: {fileID: 8317703781568648548}
   - component: {fileID: 8317703781568648549}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +171,7 @@ GameObject:
   - component: {fileID: 8317703782496459314}
   - component: {fileID: 8317703782496459315}
   - component: {fileID: 8317703782496459316}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}

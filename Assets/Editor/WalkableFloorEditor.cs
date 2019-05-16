@@ -79,6 +79,8 @@ public class WalkableFloorEditor : Editor
             List<string> helpLines = new List<string>();
             helpLines.Add("Click a walkable surface to add a new waypoint");
             helpLines.Add("Click-drag waypoints to move them");
+            helpLines.Add(string.Empty);
+            helpLines.Add("When a walker is assigned to a path, selecting them will show the path and their first targeted waypoint");
             GUI.Box(new Rect(5, 30, 400, 200), string.Join("\n", helpLines)); 
         }
         else

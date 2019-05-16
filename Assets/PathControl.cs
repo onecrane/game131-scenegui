@@ -9,6 +9,17 @@ public class PathControl : MonoBehaviour
 
     void Start()
     {
+        RefreshWaypointLocations();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    
+    public void RefreshWaypointLocations()
+    {
         foreach (Transform waypoint in transform)
         {
             if (waypoint.name.StartsWith("Waypoint_"))
@@ -18,13 +29,6 @@ public class PathControl : MonoBehaviour
             }
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
 
     public void ResetWaypointNames()
     {
@@ -46,6 +50,10 @@ public class PathControl : MonoBehaviour
 
     public void DrawPathGizmos()
     {
+        DrawPathGizmos(true);
+    }
+    public void DrawPathGizmos(bool reverse)
+    {
         Color original = Gizmos.color;
         Gizmos.color = Color.green;
         List<Transform> waypoints = new List<Transform>();
@@ -56,6 +64,7 @@ public class PathControl : MonoBehaviour
                 waypoints.Add(waypoint);
             }
         }
+        if (reverse) waypoints.Reverse();
 
         // Now draw paths
         for (int i = 0; i < waypoints.Count; i++)
@@ -65,7 +74,8 @@ public class PathControl : MonoBehaviour
 
             // Detect if there's anything in the way
             RaycastHit hitInfo;
-            if (Physics.Raycast(start + Vector3.up * 0.2f, end - start, out hitInfo))
+            int exceptionMask = ~(1 << LayerMask.NameToLayer("Character"));
+            if (Physics.Raycast(start + Vector3.up * 0.2f, end - start, out hitInfo, (end - start).magnitude, exceptionMask))
             {
                 // Green if we hit where we expect
                 if (hitInfo.collider.transform.parent != null && hitInfo.collider.transform.parent.position == end)
